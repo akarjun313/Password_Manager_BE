@@ -1,6 +1,20 @@
 import express, { Request, Response } from "express"
 import cookieParser from "cookie-parser"
 
+//Type extension
+declare global {
+    namespace Express {
+        interface Request {
+            user?: {
+                id: string
+                email: string
+                role: 'BASIC' | 'ADMIN'
+            }    
+        }
+    }
+}
+
+
 
 const app = express()
 

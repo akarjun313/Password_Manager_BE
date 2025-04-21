@@ -14,21 +14,36 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
- // User Model
+// User Model
 model User {
-  id           String   @id @default(uuid())
-  name         String
-  email        String   @unique
-  hashPassword String
-  role         Role     @default(BASIC)
-  createdAt    DateTime @default(now())
-
-  @@index([email])
+  id            String          @id @default(uuid()) // Unique ID
+  name          String // User's name
+  email         String          @unique // User's email
+  hashPassword  String // Hashed user password
+  role          Role            @default(BASIC) // User account role [BASIC or ADMIN only]
+  createdAt     DateTime        @default(now()) // Auto-set creation timestamp
+  userPasswords userPasswords[]
 }
 
 // Roles for User
 enum Role {
   ADMIN
   BASIC
+}
+
+// User password data model
+model userPasswords {
+  id        String   @id @default(uuid()) // Unique ID
+  title     String // Platform name
+  username  String // username or email to login
+  password  String // password to login
+  createdAt DateTime @default(now()) // Auto-set creation timestamp
+  updatedAt DateTime @updatedAt // Auto-updated timestamp
+
+  // Relationship to User (who owns this entry)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Unique constraint for user+title combination
+  @@unique([userId, title], name: "user_title_unique")
 }
