@@ -3,7 +3,7 @@
     //          ALL USER RELATED CONTROLS GO HERE
 
 import { Request, Response } from "express"
-import { IUser } from "@interfaces/userInterface.js"
+import { IUser } from "@interfaces/all_Interfaces.js"
 import prisma from "@lib/prisma.js"
 import bcrypt from "bcrypt"
 import { generateUserToken } from "@utils/generateToken.js"

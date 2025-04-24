@@ -36,7 +36,7 @@ model userPasswords {
   id        String   @id @default(uuid()) // Unique ID
   title     String // Platform name
   username  String // username or email to login
-  password  String // password to login
+  encryptedPassword  String // password to login
   createdAt DateTime @default(now()) // Auto-set creation timestamp
   updatedAt DateTime @updatedAt // Auto-updated timestamp
 

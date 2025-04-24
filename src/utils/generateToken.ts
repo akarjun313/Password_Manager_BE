@@ -2,7 +2,7 @@
 
 import Jwt from "jsonwebtoken"
 import dotenv from "dotenv"
-import { IUser } from "@interfaces/userInterface.js"
+import { IUser } from "@interfaces/all_Interfaces.js"
 
 
 dotenv.config()

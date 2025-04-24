@@ -1,6 +1,9 @@
 # Folders/directories
 node_modules
+src/generated/
 
 
 # files 
 .env
+
+
