@@ -12,6 +12,13 @@ export const addData = async (req: Request<{}, {}, CreatePasswordEntry>, res: Re
         const { title, username, password } = req.body
         const userId: string | undefined = req.user?.id         // Get user ID from request
 
+
+        // Check if user is authenticated
+        if (!userId) {
+            res.status(401).json({ message: "Unauthorized", success: false })
+            return
+        }
+
         // Check for required fields
         if (!title || !username || !password) {
             res.status(400).json({ message: "All fields are required", success: false })
@@ -141,12 +148,12 @@ export const getSingleDataByUser = async (req: Request<{ id: string }, {}, Creat
         // Decrypt the password
         const decryptedPassword: string = decrypt(desiredData.encryptedPassword)
 
-        // Delete encrypted password from response
-        delete desiredData.encryptedPassword
+        // Remove encrypted password from response
+        const { encryptedPassword, ...safeData } = desiredData
 
 
         // Return a success message with fetched data
-        res.status(200).json({ message: "Data retrieved successfully", success: true, data: { ...desiredData, password: decryptedPassword } })
+        res.status(200).json({ message: "Data retrieved successfully", success: true, data: { ...safeData, password: decryptedPassword } })
 
     } catch (error) {
         console.log("Error in getSingleDataByUser: ", error)

@@ -11,9 +11,9 @@ export interface CreatePasswordEntry {
 
 // user interface
 export interface IUser {
+    id: string
     name: string
     email: string
-    password: string
     hashPassword: string
     role: 'BASIC' | 'ADMIN'
 }

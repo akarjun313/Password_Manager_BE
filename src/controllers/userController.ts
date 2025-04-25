@@ -10,9 +10,10 @@ import { generateUserToken } from "@utils/generateToken.js"
 
 
 // signup user
-export const signUp = async (req: Request<{}, {}, IUser>, res: Response): Promise<void> => {
+export const signUp = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { name, email, password, role } = req.body
+        const { name, email, role }: IUser = req.body
+        const { password } : { password : string } = req.body
 
         // check if user already exists
         const userExist: IUser | null = await prisma.user.findUnique({
@@ -58,9 +59,10 @@ export const signUp = async (req: Request<{}, {}, IUser>, res: Response): Promis
 
 
 // login user
-export const userLogin = async (req: Request<{}, {}, IUser>, res: Response): Promise<void> => {
+export const userLogin = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { email, password } = req.body
+        const { email }: IUser = req.body
+        const { password }: { password: string } = req.body
 
         // check if user exists
         const userExist: IUser | null = await prisma.user.findUnique({
